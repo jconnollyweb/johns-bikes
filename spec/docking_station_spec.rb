@@ -4,10 +4,7 @@ describe DockingStation do
   it { is_expected.to respond_to :release_bike } # one line syntax
 
   # it { is_expected.to respond_to(:dock).with(1).argument }
-  it 'docks something' do
-    bike = Bike.new
-    expect(subject.dock(bike)).to eq bike
-  end
+
 
   describe '#release_bike' do # use # when describing method
     it 'releases a bike' do
@@ -25,11 +22,24 @@ describe DockingStation do
     it 'returns docked bikes' do
       bike = Bike.new
       subject.dock(bike)
-      expect(subject.bike).to eq bike
+      expect(subject.bike).to eq @bikes
     end
 
     it { is_expected.to respond_to(:bike) }
   end
+
+  describe '#dock' do
+    it 'raises error when full' do
+      20.times { subject.dock Bike.new}
+      expect {  subject.dock Bike.new }.to raise_error 'Docking station full'
+    end 
+    
+    # it 'docks something' do
+    #   bike = Bike.new        FIND OUT WHY I DID THIS LOOK THROUGH WALKTHROUGH 
+    #   subject.dock(bike)
+    #   expect(subject.bike ).to eq @bikes 
+    # end
+  end 
 end
 
 # it 'releases working bikes' do
